@@ -5,6 +5,7 @@ class Marco extends Command {
         super('marco', {
             aliases: ['marco', 'respond'],
             cooldown: 3000,
+            category: 'Utility'
         });
     }
 
