@@ -16,6 +16,10 @@ class ReloadCommand extends Command {
                 type: 'string',
                 //default: 'bitcoin'
             }],
+            description: {
+                content: 'Reload a specific module, or all modules',
+                usage: 'reload [all|command]'
+            },
             cooldown: 5000,
         });
     }
@@ -42,13 +46,7 @@ class ReloadCommand extends Command {
             return message.util.send(output);
         } else {
             let exist = false;
-            for (let [key, value] of this.handler.modules) {
-                if (value.categoryID === args.ArgOne) {
-                    exist = true;
-                    break;
-                }
-            }
-            if (exist) {
+            if (this.handler.modules.get(args.ArgOne)) {
                 this.handler.reload(args.ArgOne);
                 let output = new MessageEmbed()
                 .setColor('#66f266')

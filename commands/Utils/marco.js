@@ -5,7 +5,11 @@ class Marco extends Command {
         super('marco', {
             aliases: ['marco', 'respond'],
             cooldown: 3000,
-            category: 'Utility'
+            category: 'Utility',
+            description: {
+                content: 'Simple Marco polo command',
+                usage: 'marco'
+            }
         });
     }
 

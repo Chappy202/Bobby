@@ -24,7 +24,7 @@ class Bobby extends AkairoClient {
             // Location of the commands
             directory: './commands/',
             // Prefix that can be used for commands
-            prefix: ['?', '!', '-'],
+            prefix: ['?', '!', '-', '='],
             // Prevent other bots from running bobby commands
             blockBots: true,
             // Prevent bobby from running its own commands

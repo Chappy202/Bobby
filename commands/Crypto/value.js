@@ -22,6 +22,11 @@ class Value extends Command {
                 type: 'string',
                 //default: 'bitcoin'
             }],
+            category: 'Crypto',
+            description: {
+                content: 'Shows the current Crypto prices and API status of CoinGecko',
+                usage: 'crypto [currency|status]'
+            },
             cooldown: 5000,
         });
     }

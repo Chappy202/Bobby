@@ -9,7 +9,11 @@ class Marco extends Command {
         super('github', {
             aliases: ['github', 'ghub', 'gh'],
             cooldown: 1000,
-            category: 'Information'
+            category: 'Information',
+            description: {
+                content: 'Displays the Bobby GitHub Repository link',
+                usage: 'github'
+            }
         });
     }
 

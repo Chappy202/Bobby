@@ -11,7 +11,11 @@ class PingCommand extends Command {
         super('ping', {
             aliases: ['ping', 'latency'],
             cooldown: 5000,
-            category: 'Utility'
+            category: 'Utility',
+            description: {
+                content: 'Used to view the API and server Latency',
+                usage: 'ping'
+            }
         });
     }
     exec(message) {
