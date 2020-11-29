@@ -1,0 +1,17 @@
+{
+  "name": "bobby-2.0",
+  "version": "2.0.0",
+  "description": "Official rewrite of Bobby in the Akairo Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chappy",
+  "license": "ISC",
+  "dependencies": {
+    "coingecko-api": "^1.0.10",
+    "discord-akairo": "^8.1.0",
+    "discord.js": "^12.5.1",
+    "sqlite": "^4.0.17"
+  }
+}
