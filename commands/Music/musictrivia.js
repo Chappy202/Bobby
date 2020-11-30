@@ -1,5 +1,9 @@
-const { Command } = require("discord-akairo");
-const { MessageEmbed } = require("discord.js");
+const {
+  Command
+} = require("discord-akairo");
+const {
+  MessageEmbed
+} = require("discord.js");
 const ytdl = require("ytdl-core");
 const fs = require("fs");
 const prefix = '-';
@@ -9,34 +13,50 @@ module.exports = class MusicTriviaCommand extends Command {
     super("music-trivia", {
       aliases: ["music-trivia", "music-quiz", "start-quiz"],
       category: "Music",
-      description: { content: "Engage in a music quiz with your friends!" },
+      description: {
+        content: "Engage in a music quiz with your friends!"
+      },
       guildOnly: true,
       clientPermissions: ["SPEAK", "CONNECT"],
       throttling: {
         usages: 1,
         duration: 10
       },
-      args: [
-        {
-          id: "numberOfSongs",
-          prompt: {
-            start: (msg, text) =>
-              `What is the number of songs you want the quiz to have?`
-          },
-          type: "integer",
-          default: 5,
-          max: 15
-        }
-      ]
+      args: [{
+        id: "numberOfSongs",
+        prompt: {
+          start: (msg, text) =>
+            `What is the number of songs you want the quiz to have?`
+        },
+        type: "integer",
+        default: 5,
+        max: 15
+      }]
     });
   }
-  async exec(message, { numberOfSongs }) {
+  async exec(message, {
+    numberOfSongs
+  }) {
     // check if user is in a voice channel
     var voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-      return message.util.send("Please join a voice channel and try again");
-    if (message.guild.musicData.isPlaying === true)
-      return message.channel.send("A quiz or a song is already running");
+    if (!voiceChannel) {
+      let embed = new MessageEmbed()
+        .setTitle(`No user found in voice channel`)
+        .setColor(`#f26666`)
+        .setDescription(`Join a voice channel and try again`)
+        .setTimestamp(Date())
+        .setFooter('Channel error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
+    }
+    if (message.guild.musicData.isPlaying === true) {
+      let embed = new MessageEmbed()
+      .setTitle(`Active Quiz`)
+      .setColor(`#f26666`)
+      .setDescription(`A Quiz or a song is already running`)
+      .setTimestamp(Date())
+      .setFooter('Trivia error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
+    }
     message.guild.musicData.isPlaying = true;
     message.guild.triviaData.isTriviaRunning = true;
     // fetch link array from txt file
@@ -50,7 +70,7 @@ module.exports = class MusicTriviaCommand extends Command {
     // create and send info embed
     const infoEmbed = this.client.util
       .embed()
-      .setColor("#2f3136")
+      .setColor("#6bcbd8")
       .setTitle("Starting Music Quiz")
       .setDescription(
         `Get ready! There are ${numberOfSongs} songs, you have 60 seconds to guess either the artist/band or the name of the song. Good luck!
@@ -84,7 +104,7 @@ module.exports = class MusicTriviaCommand extends Command {
 
   static async playQuizSong(queue, message) {
     var classThis = this;
-    queue[0].voiceChannel.join().then(function(connection) {
+    queue[0].voiceChannel.join().then(function (connection) {
       const dispatcher = connection
         .play(
           ytdl(queue[0].url, {
@@ -92,7 +112,7 @@ module.exports = class MusicTriviaCommand extends Command {
             highWaterMark: 1024 * 1024 * 1024
           })
         )
-        .on("start", function() {
+        .on("start", function () {
           message.guild.musicData.songDispatcher = dispatcher;
           dispatcher.setVolume(message.guild.musicData.volume);
           let songNameFound = false;
@@ -126,7 +146,7 @@ module.exports = class MusicTriviaCommand extends Command {
               message.guild.triviaData.triviaScore.set(
                 msg.author.username,
                 message.guild.triviaData.triviaScore.get(msg.author.username) +
-                  1
+                1
               );
               msg.react("591629527571234819");
             }
@@ -150,18 +170,18 @@ module.exports = class MusicTriviaCommand extends Command {
               message.guild.triviaData.triviaScore.set(
                 msg.author.username,
                 message.guild.triviaData.triviaScore.get(msg.author.username) +
-                  1
+                1
               );
               msg.react("591629527571234819");
             } else if (
               msg.content.toLowerCase() ===
-                queue[0].artist.toLowerCase() +
-                  " " +
-                  queue[0].title.toLowerCase() ||
+              queue[0].artist.toLowerCase() +
+              " " +
+              queue[0].title.toLowerCase() ||
               msg.content.toLowerCase() ===
-                queue[0].title.toLowerCase() +
-                  " " +
-                  queue[0].artist.toLowerCase()
+              queue[0].title.toLowerCase() +
+              " " +
+              queue[0].artist.toLowerCase()
             ) {
               if (
                 (songArtistFound && !songNameFound) ||
@@ -179,7 +199,7 @@ module.exports = class MusicTriviaCommand extends Command {
               message.guild.triviaData.triviaScore.set(
                 msg.author.username,
                 message.guild.triviaData.triviaScore.get(msg.author.username) +
-                  2
+                2
               );
               msg.react("591629527571234819");
               return collector.stop();
@@ -189,7 +209,7 @@ module.exports = class MusicTriviaCommand extends Command {
             }
           });
 
-          collector.on("end", function() {
+          collector.on("end", function () {
             /*
             The reason for this if statement is that we don't want to get an
             empty embed returned via chat by the bot if end-trivia command was called
@@ -200,7 +220,7 @@ module.exports = class MusicTriviaCommand extends Command {
             }
 
             const sortedScoreMap = new Map(
-              [...message.guild.triviaData.triviaScore.entries()].sort(function(
+              [...message.guild.triviaData.triviaScore.entries()].sort(function (
                 a,
                 b
               ) {
@@ -213,7 +233,7 @@ module.exports = class MusicTriviaCommand extends Command {
             )}: ${classThis.capitalize_Words(queue[0].title)}`;
 
             const embed = new MessageEmbed()
-              .setColor("#2f3136")
+              .setColor("#6bcbd8")
               .setTitle(`The song was:  ${song}`)
               .setDescription(
                 classThis.getLeaderBoard(Array.from(sortedScoreMap.entries()))
@@ -225,7 +245,7 @@ module.exports = class MusicTriviaCommand extends Command {
             return;
           });
         })
-        .on("finish", function() {
+        .on("finish", function () {
           if (queue.length >= 1) {
             return classThis.playQuizSong(queue, message);
           } else {
@@ -237,7 +257,7 @@ module.exports = class MusicTriviaCommand extends Command {
               return;
             }
             const sortedScoreMap = new Map(
-              [...message.guild.triviaData.triviaScore.entries()].sort(function(
+              [...message.guild.triviaData.triviaScore.entries()].sort(function (
                 a,
                 b
               ) {
@@ -245,7 +265,7 @@ module.exports = class MusicTriviaCommand extends Command {
               })
             );
             const embed = new MessageEmbed()
-              .setColor("#2f3136")
+              .setColor("#6bcbd8")
               .setTitle(`Music Quiz Results:`)
               .setDescription(
                 classThis.getLeaderBoard(Array.from(sortedScoreMap.entries()))
@@ -295,7 +315,7 @@ module.exports = class MusicTriviaCommand extends Command {
   }
   // https://www.w3resource.com/javascript-exercises/javascript-string-exercise-9.php
   static capitalize_Words(str) {
-    return str.replace(/\w\S*/g, function(txt) {
+    return str.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }

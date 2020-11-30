@@ -1,4 +1,9 @@
-const { Command } = require("discord-akairo");
+const {
+  Command
+} = require("discord-akairo");
+const {
+  MessageEmbed
+} = require('discord.js');
 
 class LoopCommand extends Command {
   constructor() {
@@ -6,8 +11,10 @@ class LoopCommand extends Command {
       aliases: ["loop"],
       category: "Music",
       guildOnly: true,
-      description: { content: "Loop the current playing song" },
-      *args() {
+      description: {
+        content: "Loop the current playing song"
+      },
+      * args() {
         const numOfTimesToLoop = yield {
           id: "numOfTimesToLoop",
           default: 1,
@@ -17,19 +24,35 @@ class LoopCommand extends Command {
               `How many times do you want to loop the song?`
           }
         };
-        return { numOfTimesToLoop };
+        return {
+          numOfTimesToLoop
+        };
       }
     });
   }
 
-  exec(message, { numOfTimesToLoop }) {
+  exec(message, {
+    numOfTimesToLoop
+  }) {
     if (!message.guild.musicData.isPlaying) {
-      return message.channel.send("There is no song playing right now!");
+      let embed = new MessageEmbed()
+        .setTitle(`No song found`)
+        .setColor(`#f26666`)
+        .setDescription(`There is no song playing right now!`)
+        .setTimestamp(Date())
+        .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
     } else if (
       message.guild.musicData.isPlaying &&
       message.guild.triviaData.isTriviaRunning
     ) {
-      return message.channel.send("You cannot loop over a trivia!");
+      let embed = new MessageEmbed()
+        .setTitle(`Trivia running`)
+        .setColor(`#f26666`)
+        .setDescription(`You cannot loop over a trivia!`)
+        .setTimestamp(Date())
+        .setFooter('Trivia error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
     }
 
     for (let i = 0; i < numOfTimesToLoop; i++) {

@@ -17,7 +17,13 @@ class NowPlayingCommand extends Command {
         !message.guild.musicData.nowPlaying) ||
       message.guild.triviaData.isTriviaRunning
     ) {
-      return message.channel.send('There is no song playing right now!');
+      let embed = new MessageEmbed()
+        .setTitle(`No song found`)
+        .setColor(`#f26666`)
+        .setDescription(`There is no song playing right now!`)
+        .setTimestamp(Date())
+        .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
     }
 
     const video = message.guild.musicData.nowPlaying;
@@ -30,7 +36,7 @@ class NowPlayingCommand extends Command {
 
     const videoEmbed = new MessageEmbed()
       .setThumbnail(video.thumbnail)
-      .setColor('#2f3136')
+      .setColor('#6bcbd8')
       .setTitle(video.title)
       .setDescription(description);
     message.channel.send(videoEmbed);

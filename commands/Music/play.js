@@ -49,11 +49,24 @@ class PlayCommand extends Command {
     }) {
         const author = message.author;
         const voiceChannel = message.member.voice.channel;
-        if (!voiceChannel)
-            return message.channel.send("Join a channel and try again");
+        if (!voiceChannel) {
+            let embed = new MessageEmbed()
+                .setTitle(`No user found in voice channel`)
+                .setColor(`#f26666`)
+                .setDescription(`Join a voice channel and try again`)
+                .setTimestamp(Date())
+                .setFooter('Channel error', 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.util.send(embed);
+        }
 
         if (message.guild.triviaData.isTriviaRunning == true) {
-            return message.channel.send("Please try after the trivia has ended");
+            let embed = new MessageEmbed()
+                .setTitle(`Trivia running!`)
+                .setColor(`#f26666`)
+                .setDescription(`Try again after the trivia has ended.`)
+                .setTimestamp(Date())
+                .setFooter('Trivia error', 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.util.send(embed);
         }
 
         if (
@@ -63,15 +76,23 @@ class PlayCommand extends Command {
             )
         ) {
             const playlist = await youtube.getPlaylist(query).catch(function () {
-                return message.channel.send(
-                    "Playlist is either private or it does not exist!"
-                );
+                let embed = new MessageEmbed()
+                    .setTitle(`Unable to find playlist`)
+                    .setColor(`#f26666`)
+                    .setDescription(`Playlist is either private or id doesn't exist!`)
+                    .setTimestamp(Date())
+                    .setFooter('Playlist error', 'https://chappy202.com/bobby-project/images/avatar.png');
+                return message.channel.send(embed);
             });
             // remove the 10 if you removed the queue limit conditions below
             const videosObj = await playlist.getVideos(10).catch(function () {
-                return message.channel.send(
-                    "There was a problem getting one of the videos in the playlist!"
-                );
+                let embed = new MessageEmbed()
+                    .setTitle(`Unable to get video`)
+                    .setColor(`#f26666`)
+                    .setDescription(`There was a problem getting one of the videos in the playlist!`)
+                    .setTimestamp(Date())
+                    .setFooter('Playlist error', 'https://chappy202.com/bobby-project/images/avatar.png');
+                return message.channel.send(embed);
             });
             for (let i = 0; i < videosObj.length; i++) {
                 const video = await videosObj[i].fetch();
@@ -91,9 +112,12 @@ class PlayCommand extends Command {
                 message.guild.musicData.isPlaying = true;
                 return PlayCommand.playSong(message.guild.musicData.queue, message);
             } else if (message.guild.musicData.isPlaying == true) {
-                return message.channel.send(
-                    `Playlist - :musical_note:  ${playlist.title} :musical_note: has been added to queue`
-                );
+                let embed = new MessageEmbed()
+                    .setTitle(`Playlist added`)
+                    .setColor(`#6bcbd8`)
+                    .setDescription(`Playlist - :musical_note:  ${playlist.title} :musical_note: has been added to queue`)
+                    .setTimestamp(Date())
+                return message.channel.send(embed);
             }
         }
 
@@ -104,9 +128,13 @@ class PlayCommand extends Command {
                 .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
             const id = query[2].split(/[^0-9a-z_\-]/i)[0];
             const video = await youtube.getVideoByID(id).catch(function () {
-                return message.channel.send(
-                    "There was a problem getting the video you provided!"
-                );
+                let embed = new MessageEmbed()
+                    .setTitle(`Unable to get video`)
+                    .setColor(`#f26666`)
+                    .setDescription(`There was a problem getting the video you provided!`)
+                    .setTimestamp(Date())
+                    .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+                return message.channel.send(embed);
             });
             // // can be uncommented if you don't want the bot to play live streams
             // if (video.raw.snippet.liveBroadcastContent === 'live') {
@@ -132,20 +160,33 @@ class PlayCommand extends Command {
                 message.guild.musicData.isPlaying = true;
                 return PlayCommand.playSong(message.guild.musicData.queue, message);
             } else if (message.guild.musicData.isPlaying == true) {
-                return message.channel.send(`${video.title} added to queue`);
+                let embed = new MessageEmbed()
+                    .setTitle(`Song added`)
+                    .setColor(`#6bcbd8`)
+                    .setDescription(`${video.title} added to queue`)
+                    .setTimestamp(Date())
+                return message.channel.send(embed);
             }
         }
 
         // if user provided a song/video name
         const videos = await youtube.searchVideos(query, 10).catch(function () {
-            return message.channel.send(
-                "There was a problem searching the video you requested :("
-            );
+            let embed = new MessageEmbed()
+                .setTitle(`Unable to get video`)
+                .setColor(`#f26666`)
+                .setDescription(`There was a problem searching the video you requested :(`)
+                .setTimestamp(Date())
+                .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.channel.send(embed);
         });
         if (videos.length < 10) {
-            return message.channel.send(
-                `I had some trouble finding what you were looking for, please try again or be more specific`
-            );
+            let embed = new MessageEmbed()
+                .setTitle(`Unable to get video`)
+                .setColor(`#f26666`)
+                .setDescription(`I had some trouble finding what you were looking for, please try again or be more specific`)
+                .setTimestamp(Date())
+                .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.channel.send(embed);
         }
         const vidNameArr = [];
         for (let i = 0; i < videos.length; i++) {
@@ -154,8 +195,8 @@ class PlayCommand extends Command {
         vidNameArr.push("exit");
         const embed = this.client.util
             .embed()
-            .setColor("#2f3136")
-            .setAuthor("Katarin Song Selection.", this.client.user.displayAvatarURL())
+            .setColor("#6bcbd8")
+            .setAuthor("Bobby Song Selection.", this.client.user.displayAvatarURL())
             .setDescription(
                 `Choose a song by commenting a number between 1 and 10
 Song 1  : ${vidNameArr[0]}
@@ -226,25 +267,38 @@ Type \`exit\` to exit menu and cancel song selection.`
                             if (songEmbed) {
                                 songEmbed.delete();
                             }
-                            return message.channel.send(`${video.title} added to queue`);
+                            let embed = new MessageEmbed()
+                                .setTitle(`Song added`)
+                                .setColor(`#6bcbd8`)
+                                .setDescription(`${video.title} added to queue`)
+                                .setTimestamp(Date())
+                            return message.channel.send(embed);
                         }
                     })
                     .catch(function () {
                         if (songEmbed) {
                             songEmbed.delete();
                         }
-                        return message.channel.send(
-                            "An error has occured when trying to get the video ID from youtube"
-                        );
+                        let embed = new MessageEmbed()
+                            .setTitle(`Unable to get ID`)
+                            .setColor(`#f26666`)
+                            .setDescription(`An error has occured when trying to get the video ID from youtube`)
+                            .setTimestamp(Date())
+                            .setFooter('YouTube error', 'https://chappy202.com/bobby-project/images/avatar.png');
+                        return message.channel.send(embed);
                     });
             })
             .catch(function () {
                 if (songEmbed) {
                     songEmbed.delete();
                 }
-                return message.channel.send(
-                    "Please try again and enter a number between 1 and 10 or exit"
-                );
+                let embed = new MessageEmbed()
+                    .setTitle(`Unable to get song`)
+                    .setColor(`#f26666`)
+                    .setDescription(`Please try again and enter a number between 1 and 10 or exit`)
+                    .setTimestamp(Date())
+                    .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+                return message.channel.send(embed);
             });
     }
     static playSong(queue, message) {
@@ -267,7 +321,7 @@ Type \`exit\` to exit menu and cancel song selection.`
                             .setTitle("Now Playing " + queue[0].title)
                             .setURL(queue[0].url)
                             .setDescription("Duration: " + queue[0].duration)
-                            .setColor("#2f3136")
+                            .setColor("#6bcbd8")
                             .setFooter("Requested By: " + message.author.tag)
                             .setTimestamp();
                         if (queue[1])
@@ -285,14 +339,23 @@ Next Song:
                             message.guild.musicData.isPlaying = false;
                             message.guild.musicData.nowPlaying = null;
                             message.guild.musicData.songDispatcher = null;
-                            message.channel.send(
-                                "There's no song in queue (add more song to play), leaving channel."
-                            );
+                            let embed = new MessageEmbed()
+                                .setTitle(`Queue Empty`)
+                                .setColor(`#6bcbd8`)
+                                .setDescription(`There aren't any songs in the queue. Leaving channel.`)
+                                .setTimestamp(Date())
+                            message.channel.send(embed);
                             return message.guild.me.voice.channel.leave();
                         }
                     })
                     .on("error", function (e) {
-                        message.channel.send("Cannot play song");
+                        let embed = new MessageEmbed()
+                            .setTitle(`Playback failed`)
+                            .setColor(`#f26666`)
+                            .setDescription(`Cannot play song`)
+                            .setTimestamp(Date())
+                            .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+                        message.channel.send(embed);
                         console.error(e);
                         message.guild.musicData.queue.length = 0;
                         message.guild.musicData.isPlaying = false;

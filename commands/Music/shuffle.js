@@ -1,4 +1,7 @@
 const { Command } = require("discord-akairo");
+const {
+  MessageEmbed
+} = require('discord.js');
 
 class ShuffleQueueCommand extends Command {
   constructor() {
@@ -11,17 +14,38 @@ class ShuffleQueueCommand extends Command {
   }
   exec(message) {
     var voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.reply("Join a channel and try again");
+    if (!voiceChannel) {
+      let embed = new MessageEmbed()
+      .setTitle(`No user found in voice channel`)
+      .setColor(`#f26666`)
+      .setDescription(`Join a voice channel and try again`)
+      .setTimestamp(Date())
+      .setFooter('Channel error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
+    }
 
     if (
       typeof message.guild.musicData.songDispatcher == "undefined" ||
       message.guild.musicData.songDispatcher == null
     ) {
-      return message.reply("There is no song playing right now!");
+      let embed = new MessageEmbed()
+        .setTitle(`No song found`)
+        .setColor(`#f26666`)
+        .setDescription(`There is no song playing right now!`)
+        .setTimestamp(Date())
+        .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
     }
 
-    if (message.guild.musicData.queue.length < 1)
-      return message.util.send("There are no songs in queue");
+    if (message.guild.musicData.queue.length < 1) {
+      let embed = new MessageEmbed()
+        .setTitle(`No song found`)
+        .setColor(`#f26666`)
+        .setDescription(`There are no songs in the queue`)
+        .setTimestamp(Date())
+        .setFooter('Queue error', 'https://chappy202.com/bobby-project/images/avatar.png');
+      return message.util.send(embed);
+    }
 
     shuffleQueue(message.guild.musicData.queue);
 
@@ -31,7 +55,7 @@ class ShuffleQueueCommand extends Command {
     });
     var queueEmbed = this.client.util
       .embed()
-      .setColor("#2f3136")
+      .setColor("#6bcbd8")
       .setTitle("New Music Queue");
     for (let i = 0; i < titleArray.length; i++) {
       queueEmbed.addField(`${i + 1}:`, `${titleArray[i]}`);
