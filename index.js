@@ -82,6 +82,7 @@ const client = new Bobby();
 client
     .on("shardDisconnect", () => Logger.warn("Connection lost..."))
     .on("shardReconnecting", () => Logger.info("Attempting to reconnect..."))
+    .on("shardReady", () => Logger.info("Connected!"))
     .on("error", err => Logger.error(err))
     .on("warn", info => Logger.warn(info));
 
