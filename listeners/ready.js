@@ -1,15 +1,17 @@
 const { Listener } = require('discord-akairo');
+const Logger = require('../utils/Logger');
 
 class Ready extends Listener {
     constructor() {
         super('ready', {
             event: 'ready',
-            emitter: 'client'
+            emitter: 'client',
+            category: 'client'
         });
     }
     exec(){
         this.client.user.setActivity("OHGT", { type: "LISTENING" });
-        console.log(`I'm ready to rumble!`);
+        Logger.info(`${this.client.user.tag} is ready to rumble!!`);
     }
 }
 

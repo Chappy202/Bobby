@@ -3,11 +3,34 @@ const {
     CommandHandler,
     ListenerHandler
 } = require('discord-akairo');
+const { Structures } = require('discord.js');
 const {
     token,
     bobbyOwner
 } = require('./config.json');
 
+Structures.extend("Guild", function(Guild){
+    class MusicGuild extends Guild {
+        constructor(client, data) {
+            super(client, data);
+            this.musicData = {
+              queue: [],
+              isPlaying: false,
+              nowPlaying: null,
+              songDispatcher: null,
+              volume: 1
+            };
+            this.triviaData = {
+              isTriviaRunning: false,
+              wasTriviaEndCalled: false,
+              triviaQueue: [],
+              userGuessed: new Map(),
+              triviaScore: new Map()
+            };
+          }
+    }
+    return MusicGuild;
+});
 
 class Bobby extends AkairoClient {
     constructor() {
@@ -52,5 +75,14 @@ class Bobby extends AkairoClient {
     }
 }
 
+const Logger = require('./utils/Logger');
+
 const client = new Bobby();
+
+client
+    .on("shardDisconnect", () => Logger.warn("Connection lost..."))
+    .on("shardReconnecting", () => Logger.info("Attempting to reconnect..."))
+    .on("error", err => Logger.error(err))
+    .on("warn", info => Logger.warn(info));
+
 client.login(token);
