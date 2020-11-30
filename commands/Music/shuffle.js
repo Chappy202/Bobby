@@ -4,7 +4,7 @@ class ShuffleQueueCommand extends Command {
   constructor() {
     super("shuffle", {
       aliases: ["shuffle"],
-      category: "Nusic",
+      category: "Music",
       description: { content: "Shuffle the song queue" },
       guildOnly: true
     });

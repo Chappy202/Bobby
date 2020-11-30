@@ -4,7 +4,7 @@ module.exports = class VolumeCommand extends Command {
   constructor() {
     super("volume", {
       aliases: ["volume", "change-volume"],
-      group: "music",
+      category: 'Music',
       guildOnly: true,
       description: { content: "Adjust song volume" },
       throttling: {

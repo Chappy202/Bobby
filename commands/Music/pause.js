@@ -4,7 +4,7 @@ class PauseCommand extends Command {
   constructor() {
     super("pause", {
       aliases: ['pause', 'pause-song', 'hold', 'stop'],
-      category: 'music',
+      category: 'Music',
       description: { content: 'Pause the current playing song'},
       guildOnly: true
     });
