@@ -18,7 +18,7 @@ class ResumeCommand extends Command {
   }
 
   exec(message) {
-    var voiceChannel = message.member.voice.channel;
+    let voiceChannel = message.member.voice.channel;
     if (!voiceChannel) {
       let embed = new MessageEmbed()
         .setTitle(`No user found in voice channel`)
