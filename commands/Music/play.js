@@ -339,13 +339,15 @@ Next Song:
                             message.guild.musicData.isPlaying = false;
                             message.guild.musicData.nowPlaying = null;
                             message.guild.musicData.songDispatcher = null;
-                            let embed = new MessageEmbed()
+                            setTimeout(() => {
+                                let embed = new MessageEmbed()
                                 .setTitle(`Queue Empty`)
                                 .setColor(`#6bcbd8`)
                                 .setDescription(`There aren't any songs in the queue. Leaving channel.`)
                                 .setTimestamp(Date())
                             message.channel.send(embed);
                             return message.guild.me.voice.channel.leave();
+                            }, 5000);   
                         }
                     })
                     .on("error", function (e) {
