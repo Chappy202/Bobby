@@ -1,4 +1,6 @@
-const { Listener } = require('discord-akairo');
+const {
+    Listener
+} = require('discord-akairo');
 const Logger = require('../utils/Logger');
 
 class Ready extends Listener {
@@ -9,8 +11,15 @@ class Ready extends Listener {
             category: 'client'
         });
     }
-    exec(){
-        this.client.user.setActivity("OHGT", { type: "LISTENING" });
+    exec() {
+        // setInterval(() => {
+        //     this.client.user.setActivity("OHGT", {
+        //         type: "LISTENING"
+        //     });
+        // }, 3600000)
+        this.client.user.setActivity("OHGT", {
+            type: "LISTENING"
+        });
         Logger.info(`${this.client.user.tag} is ready to rumble!!`);
     }
 }

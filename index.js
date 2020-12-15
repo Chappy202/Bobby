@@ -3,34 +3,13 @@ const {
     CommandHandler,
     ListenerHandler
 } = require('discord-akairo');
-const { Structures } = require('discord.js');
+const {
+    Player
+} = require('discord-music-player');
 const {
     token,
     bobbyOwner
 } = require('./config.json');
-
-Structures.extend("Guild", function(Guild){
-    class MusicGuild extends Guild {
-        constructor(client, data) {
-            super(client, data);
-            this.musicData = {
-              queue: [],
-              isPlaying: false,
-              nowPlaying: null,
-              songDispatcher: null,
-              volume: 1
-            };
-            this.triviaData = {
-              isTriviaRunning: false,
-              wasTriviaEndCalled: false,
-              triviaQueue: [],
-              userGuessed: new Map(),
-              triviaScore: new Map()
-            };
-          }
-    }
-    return MusicGuild;
-});
 
 class Bobby extends AkairoClient {
     constructor() {
@@ -72,6 +51,13 @@ class Bobby extends AkairoClient {
         this.CommandHandler.useListenerHandler(this.ListenerHandler);
         this.ListenerHandler.loadAll();
         this.CommandHandler.loadAll();
+
+        this.player = new Player(this, {
+            leaveOnEnd: false,
+            leaveOnStop: true,
+            leaveOnEmpty: true,
+            quality: 'high',
+        });
     }
 }
 
@@ -81,7 +67,7 @@ const client = new Bobby();
 
 client
     .on("shardDisconnect", () => Logger.warn("Connection lost..."))
-    .on("shardReconnecting", () => Logger.info("Attempting to reconnect..."))
+    .on("shardReconnecting", () => Logger.warn("Attempting to reconnect..."))
     .on("shardError", () => Logger.err("Connection Error..."))
     .on("shardResume", () => Logger.info("Reconnected!"))
     .on("shardReady", () => Logger.info("Connected!"))

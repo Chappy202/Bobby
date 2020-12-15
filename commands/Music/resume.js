@@ -1,57 +1,44 @@
 const {
-  Command
-} = require("discord-akairo");
+    Command
+} = require('discord-akairo');
+// Get the Discordjs Embed functionality
 const {
-  MessageEmbed
+    MessageEmbed
 } = require('discord.js');
 
 class ResumeCommand extends Command {
-  constructor() {
-    super("resume", {
-      aliases: ["resume", "resume-song", "continue"],
-      category: "Music",
-      description: {
-        content: "Resume the current paused song"
-      },
-      guildOnly: true
-    });
-  }
-
-  exec(message) {
-    let voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) {
-      let embed = new MessageEmbed()
-        .setTitle(`No user found in voice channel`)
-        .setColor(`#f26666`)
-        .setDescription(`Join a voice channel and try again`)
-        .setTimestamp(Date())
-        .setFooter('Channel error', 'https://chappy202.com/bobby-project/images/avatar.png');
-      return message.util.send(embed);
+    constructor() {
+        super('resume', {
+            aliases: ['resume'],
+            category: 'Music',
+            description: {
+                content: 'Resumes the current paused song.',
+                usage: 'resume'
+            },
+            guildOnly: true,
+        });
+    }
+    async exec(message) {
+        let song = await this.client.player.resume(message.guild.id);
+        song = song.song;
+        if (song) {
+            let embed = new MessageEmbed()
+                .setTitle(`Resumed: ${song.name}`)
+                .setColor(`#6bcbd8`)
+                .setDescription(`Song resumed :arrow_forward:`)
+                .setTimestamp(Date())
+                .setFooter(`Playback resumed`, 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.util.send(embed);
+        } else {
+            let embed = new MessageEmbed()
+                .setAuthor(`${message.guild.name} Current song`, message.guild.iconURL())
+                .setColor(`#f26666`)
+                .setDescription(`There is currently no song playing.`)
+                .setTimestamp(Date())
+            return message.util.send(embed);
+        }
     }
 
-    if (
-      typeof message.guild.musicData.songDispatcher == "undefined" ||
-      message.guild.musicData.songDispatcher === null
-    ) {
-      let embed = new MessageEmbed()
-        .setTitle(`No song found`)
-        .setColor(`#f26666`)
-        .setDescription(`There is no song playing right now!`)
-        .setTimestamp(Date())
-        .setFooter('Song error', 'https://chappy202.com/bobby-project/images/avatar.png');
-      return message.util.send(embed);
-    }
-    let embed = new MessageEmbed()
-      .setTitle(`Song Reume`)
-      .setColor(`#6bcbd8`)
-      .setDescription(`Resumed the song playback :play_pause:`)
-      .setTimestamp(Date())
-      .setFooter('Resume Command', 'https://chappy202.com/bobby-project/images/avatar.png');
-
-    message.channel.send(embed);
-
-    message.guild.musicData.songDispatcher.resume();
-  }
 }
 
 module.exports = ResumeCommand;
