@@ -3,8 +3,6 @@
 # Bobby Discord Bot
 Bobby is a Discord bot built on the [Akairo framework](https://discord-akairo.github.io/#/) alongside [Discord.js](https://discord.js.org/#/) with the purpose of developing our skills and experience as well as providing us a fun bot to use and play with on our community and private Discord servers.
 
-Bobby is a fun character with a imagination of his own.
-
 ## Features
 - Crypto Currency Price fetching
 - Fun commands
