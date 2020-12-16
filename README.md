@@ -16,7 +16,7 @@ Bobby is a Discord bot built on the [Akairo framework](https://discord-akairo.gi
 - **Git**, you will need Git.
 
 ## Commands
-- **cyrpto** - Used to check the current value of a specific currency
+- **crypto** - Used to check the current value of a specific currency
     - **btc** - Used to check the value of bitcoin
     - **token** - Alias of crypto
     - **value** - Alias of crypto
