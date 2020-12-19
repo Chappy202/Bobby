@@ -4,7 +4,7 @@ const {
     MessageEmbed
 } = require('discord.js');
 
-class Marco extends Command {
+class GitHub extends Command {
     constructor() {
         super('github', {
             aliases: ['github', 'ghub', 'gh'],
@@ -31,4 +31,4 @@ class Marco extends Command {
     }
 }
 
-module.exports = Marco;
+module.exports = GitHub;

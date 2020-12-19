@@ -10,7 +10,7 @@ class HelpCommand extends Command {
     constructor() {
         super('help', {
             aliases: ['help', 'guide', 'list'],
-            category: 'Utility',
+            category: 'Information',
             args: [{
                 id: 'ArgOne',
                 type: 'string',
