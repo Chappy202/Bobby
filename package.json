@@ -11,10 +11,10 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "chalk": "^4.1.0",
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.5",
     "coingecko-api": "^1.0.10",
     "discord-akairo": "^8.1.0",
-    "discord-music-player": "^6.2.0",
+    "discord-music-player": "git+https://github.com/SushiBtw/discord-music-player.git",
     "discord.js": "^12.5.1",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.2.7",
@@ -22,13 +22,12 @@
     "moment-duration-format": "^2.3.2",
     "node-fetch": "^2.6.1",
     "node-superfetch": "^0.1.10",
-    "opusscript": "0.0.7",
     "pluralize": "^8.0.0",
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",
     "snekfetch": "^4.0.4",
     "sqlite": "^4.0.18",
     "steam-market-fetcher": "^1.4.5",
-    "ytdl-core": "^4.2.0"
+    "ytdl-core": "^4.2.1"
   }
 }

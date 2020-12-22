@@ -3,7 +3,7 @@ const {
 } = require('discord-akairo');
 // Get the Discordjs Embed functionality
 const {
-    MessageEmbed
+    MessageEmbed, GuildChannel
 } = require('discord.js');
 
 class LeaveCommand extends Command {
@@ -20,6 +20,7 @@ class LeaveCommand extends Command {
     }
     async exec(message) {
         this.client.player.stop(message.guild.id);
+        //GuildChannel.leave();
         let embed = new MessageEmbed()
                     .setTitle(`Looks like I'm no longer wanted...`)
                     .setColor(`#6bcbd8`)

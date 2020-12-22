@@ -54,8 +54,9 @@ class Bobby extends AkairoClient {
 
         this.player = new Player(this, {
             leaveOnEnd: false,
-            leaveOnStop: true,
-            leaveOnEmpty: true,
+            leaveOnStop: false,
+            leaveOnEmpty: false,
+            timeout: 5000,
             quality: 'high',
         });
     }

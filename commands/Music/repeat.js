@@ -9,37 +9,40 @@ const {
 class RepeatCommand extends Command {
     constructor() {
         super('repeat', {
-            aliases: ['repeat'],
+            aliases: ['repeat', 'loop'],
             category: 'Music',
             description: {
-                content: 'Reoeats a song',
-                usage: 'repeat <song>'
+                content: 'Repeats the current playing song',
+                usage: 'repeat'
             },
             guildOnly: true,
             clientPermissions: ["SPEAK", "CONNECT"],
-            * args() {
-                const query = yield {
-                    match: "content",
-                    prompt: {
-                        start: (msg, text) =>
-                            `What song or playlist would you like to repeat?`
-                    },
-                    type: "string",
-                    validate: function (query) {
-                        return query.length > 0 && query.length < 200;
-                    }
-                };
-                return {
-                    query
-                };
-            }
         });
     }
-    async exec(message, {
-        query
-    }) {
-        // this.client.player.setRepeatMode(message.guild.id, true);
-
+    async exec(message) {
+        let toggle = this.client.player.toggleLoop(message.guild.id);
+        let song = this.client.player.nowPlaying(message.guild.id);
+        if (toggle) {
+            let embed = new MessageEmbed()
+                .setTitle(`Repeating ➤ ${song.name}`)
+                .setURL(`${song.url}`)
+                .setColor(`#6bcbd8`)
+                .setDescription(`Duration: ${song.duration}\nAuthor: ${song.author}`)
+                .setThumbnail(`${song.thumbnail}`)
+                .setTimestamp(Date())
+                .setFooter(`Requested by: ${song.requestedBy}`, 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.util.send(embed);
+        } else {
+            let embed = new MessageEmbed()
+                .setTitle(`Stopped Repeating ➤ ${song.name}`)
+                .setURL(`${song.url}`)
+                .setColor(`#6bcbd8`)
+                .setDescription(`Duration: ${song.duration}\nAuthor: ${song.author}`)
+                .setThumbnail(`${song.thumbnail}`)
+                .setTimestamp(Date())
+                .setFooter(`Requested by: ${song.requestedBy}`, 'https://chappy202.com/bobby-project/images/avatar.png');
+            return message.util.send(embed);
+        }
     }
 }
 
