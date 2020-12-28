@@ -26,6 +26,7 @@ class SongChangedListener extends Listener {
                 .setFooter(`Requested by: ${newSong.requestedBy}`, 'https://chappy202.com/bobby-project/images/avatar.png');
             return message.util.send(embed);
         } else {
+            console.log(newSong);
             let embed = new MessageEmbed()
                 .setTitle(`Ended: ${oldSong.name} Playing ➤ ${newSong.name}`)
                 .setURL(`${song.url}`)

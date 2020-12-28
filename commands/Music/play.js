@@ -57,10 +57,10 @@ class PlayCommand extends Command {
         // Check whether or not the user gave a playlist instead on a single song [Temporary]
         let playlistRegExp =  /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
         if (query.match(playlistRegExp)) {
-            let playlist = await this.client.player.playlist(message.guild.id, query, voiceChannel, 200);
+            let playlist = await this.client.player.playlist(message.guild.id, query, voiceChannel, 200, message.author.tag);
             let song = playlist.song;
             playlist = playlist.playlist;
-            //console.log(song);
+            //console.log(playlist);
             let embed = new MessageEmbed()
                 .setTitle(`Added Playlist to Qeue ➤ ${song.name}`)
                 .setURL(`${song.url}`)
@@ -68,7 +68,7 @@ class PlayCommand extends Command {
                 .setDescription(`Songs: ${playlist.videoCount}\nAuthor: ${playlist.channel}`)
                 .setThumbnail(`${song.thumbnail}`)
                 .setTimestamp(Date())
-                .setFooter(`Requested by: ${(song.requestedBy) ? song.requestedBy : 'Unknown'}`, 'https://chappy202.com/bobby-project/images/avatar.png');
+                .setFooter(`Requested by: ${(playlist.requestedBy) ? playlist.requestedBy : 'Unknown'}`, 'https://chappy202.com/bobby-project/images/avatar.png');
             message.util.send(embed);
             if (!isPlaying) {
                 let embed = new MessageEmbed()

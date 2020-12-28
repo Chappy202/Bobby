@@ -48,17 +48,17 @@ class Bobby extends AkairoClient {
             listenerHandler: this.ListenerHandler
         });
 
-        this.CommandHandler.useListenerHandler(this.ListenerHandler);
-        this.ListenerHandler.loadAll();
-        this.CommandHandler.loadAll();
-
         this.player = new Player(this, {
             leaveOnEnd: false,
-            leaveOnStop: false,
+            leaveOnStop: true,
             leaveOnEmpty: false,
             timeout: 5000,
             quality: 'high',
         });
+
+        this.CommandHandler.useListenerHandler(this.ListenerHandler);
+        this.ListenerHandler.loadAll();
+        this.CommandHandler.loadAll();
     }
 }
 

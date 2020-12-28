@@ -9,7 +9,7 @@ const {
 class LeaveCommand extends Command {
     constructor() {
         super('leave', {
-            aliases: ['leave', 'fuckoff', 'foff', 'ff'],
+            aliases: ['leave', 'fuckoff', 'foff', 'ff', 'bye'],
             category: 'Music',
             description: {
                 content: 'Tells bobby to leave the channel',
