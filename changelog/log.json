@@ -1,0 +1,93 @@
+[{
+        "date": "Nov 29, 2020",
+        "changes": ["Fix Help Command",
+            "Add Prefix Help Command",
+            "Fix command specific reload",
+            "Add Description to ping command",
+            "Add Description to marco command",
+            "Add Description to GitHub command",
+            "Add Description to Crypto/Value command"
+        ]
+    },
+    {
+        "date": "Nov 30, 2020",
+        "changes": ["Add ban command",
+            "Add kick command",
+            "Add prune command",
+            "Add 8ball command",
+            "Add Hug command",
+            "Add Play Music Command",
+            "Add Leave Music Command",
+            "Add Loop music command",
+            "Add lyrics music command",
+            "Add musictrivia music command",
+            "Add nowplaying music command",
+            "Add pause music command",
+            "Add queue music command",
+            "Add resume music command",
+            "Add shuffle music command",
+            "Add skip music command",
+            "Add skipall music command",
+            "Add skipto music command",
+            "Add stopmusictrivia music command",
+            "Add volume music command",
+            "Add serverinfo command",
+            "Add uptime command",
+            "Add userinfo command",
+            "Add new Music guild functionality",
+            "Add sharding capabilities",
+            "Add category to ready event",
+            "Add formatting for ready event logger",
+            "Remove node_modules from github",
+            "Add new functions utility",
+            "Add new Logger utility",
+            "All music messages now have embeds"
+        ]
+    },
+    {
+        "date": "Dec 2, 2020",
+        "changes": ["New TTS Command",
+            "New Say Command",
+            "New Eval Command"
+        ]
+    },
+    {
+        "date": "Dec 9, 2020",
+        "changes": ["Bot now has a 5 second delay before leaving channel",
+            "Better indicators in the console"
+        ]
+    },
+    {
+        "date": "Dec 15, 2020",
+        "changes": ["Overhauled the Music System",
+            "Updated a bunch of dependancies"
+        ]
+    },
+    {
+        "date": "Dec 19, 2020",
+        "changes": ["New Reddit Command",
+            "New Steammarket Command (WIP)",
+            "New about Command",
+            "Improved GitHub Command",
+            "New Userinfo Command",
+            "New Avatar Command",
+            "New Servericon Command",
+            "New Stats Command"
+        ]
+    },
+    {
+        "date": "Dec 22, 2020",
+        "changes": ["Fixed the leave Command",
+            "Added youtube and Vimeo playlist support to the play command",
+            "Added a new loop Command"
+        ]
+    },
+    {
+        "date": "Dec 28, 2020",
+        "changes": ["Added a new 'bye' alias for the leave command",
+            "Fixed the leave command (Again..)",
+            "Added a requestedBy parameter for the playlist",
+            "New Changelog Command"
+        ]
+    }
+]
