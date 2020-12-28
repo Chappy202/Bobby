@@ -101,7 +101,7 @@ class PlayCommand extends Command {
             try {
                 let song = await this.client.player.play(voiceChannel, query, {}, message.author.tag);
                 song = song.song;
-                console.log(song);
+                //console.log(song);
                 let embed = new MessageEmbed()
                     .setTitle(`Playing ➤ ${song.name}`)
                     .setURL(`${song.url}`)
